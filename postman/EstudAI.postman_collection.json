@@ -1,0 +1,442 @@
+{
+  "info": {
+    "_postman_id": "c9f3c1b6-0d9f-4c19-9d8f-3b431f58efc4",
+    "name": "Estud.ai API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Coleção com todas as rotas da API Estud.ai. Use a variável `base_url` (ex: http://localhost:3000/api) e `authToken` (Bearer)."
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Registrar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome_completo\": \"Maria Souza\",\n  \"email\": \"maria@example.com\",\n  \"senha\": \"Senha@123\",\n  \"data_nascimento\": \"1995-05-10\"\n}"
+            },
+            "url": "{{base_url}}/auth/register"
+          },
+          "response": [
+            {
+              "name": "201 Sucesso",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": "{{base_url}}/auth/register"
+              },
+              "status": "Created",
+              "code": 201,
+              "body": "{\n  \"timestamp\": \"2025-01-01T12:00:00.000Z\",\n  \"message\": \"Usuário registrado com sucesso\",\n  \"data\": {\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n    \"usuario\": {\n      \"id\": \"uuid-usuario\",\n      \"nome_completo\": \"Maria Souza\",\n      \"email\": \"maria@example.com\",\n      \"data_nascimento\": \"1995-05-10\",\n      \"criado_em\": \"2025-01-01T12:00:00.000Z\"\n    }\n  }\n}"
+            },
+            {
+              "name": "409 Email em uso",
+              "status": "Conflict",
+              "code": 409,
+              "body": "{\n  \"message\": \"Email já está em uso\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"maria@example.com\",\n  \"senha\": \"Senha@123\"\n}"
+            },
+            "url": "{{base_url}}/auth/login"
+          },
+          "response": [
+            {
+              "name": "200 Sucesso",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"timestamp\": \"2025-01-01T12:05:00.000Z\",\n  \"message\": \"Login realizado com sucesso\",\n  \"data\": {\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n    \"usuario\": {\n      \"id\": \"uuid-usuario\",\n      \"nome_completo\": \"Maria Souza\",\n      \"email\": \"maria@example.com\",\n      \"data_nascimento\": \"1995-05-10\",\n      \"criado_em\": \"2025-01-01T12:00:00.000Z\"\n    }\n  }\n}"
+            },
+            {
+              "name": "401 Credenciais inválidas",
+              "status": "Unauthorized",
+              "code": 401,
+              "body": "{\n  \"message\": \"Email ou senha inválidos\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Meu Perfil",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": "{{base_url}}/auth/me"
+          },
+          "response": [
+            {
+              "name": "200 Sucesso",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"timestamp\": \"2025-01-01T12:10:00.000Z\",\n  \"message\": \"Perfil recuperado com sucesso\",\n  \"data\": {\n    \"id\": \"uuid-usuario\",\n    \"nome_completo\": \"Maria Souza\",\n    \"email\": \"maria@example.com\",\n    \"data_nascimento\": \"1995-05-10\",\n    \"criado_em\": \"2025-01-01T12:00:00.000Z\"\n  }\n}"
+            },
+            {
+              "name": "401 Não autenticado",
+              "status": "Unauthorized",
+              "code": 401,
+              "body": "{\n  \"message\": \"User not authenticated\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Atualizar Perfil",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome_completo\": \"Maria S. Silva\"\n}"
+            },
+            "url": "{{base_url}}/auth/me"
+          },
+          "response": [
+            {
+              "name": "200 Sucesso",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"timestamp\": \"2025-01-01T12:15:00.000Z\",\n  \"message\": \"Perfil atualizado com sucesso\",\n  \"data\": {\n    \"id\": \"uuid-usuario\",\n    \"nome_completo\": \"Maria S. Silva\",\n    \"email\": \"maria@example.com\",\n    \"data_nascimento\": \"1995-05-10\",\n    \"criado_em\": \"2025-01-01T12:00:00.000Z\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Excluir Conta",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": "{{base_url}}/auth/me"
+          },
+          "response": [
+            {
+              "name": "200 Sucesso",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"timestamp\": \"2025-01-01T12:20:00.000Z\",\n  \"message\": \"Conta excluída com sucesso\",\n  \"data\": null\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Conteúdos",
+      "item": [
+        {
+          "name": "Criar Conteúdo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"input\": \"Texto longo (>=50 chars) descrevendo o conteúdo para gerar questionário\"\n}"
+            },
+            "url": "{{base_url}}/conteudos"
+          },
+          "response": [
+            {
+              "name": "201 Sucesso",
+              "status": "Created",
+              "code": 201,
+              "body": "{\n  \"timestamp\": \"2025-01-01T12:30:00.000Z\",\n  \"message\": \"Conteúdo e questionário criados com sucesso!\",\n  \"data\": {\n    \"conteudo_id\": \"uuid-conteudo\",\n    \"titulo\": \"Título gerado\",\n    \"descricao\": \"Descrição gerada\",\n    \"questionario_id\": \"uuid-questionario\",\n    \"perguntas_criadas\": 7\n  }\n}"
+            },
+            {
+              "name": "400 Input curto",
+              "status": "Bad Request",
+              "code": 400,
+              "body": "{\n  \"message\": \"O conteúdo deve ter pelo menos 50 caracteres para gerar um bom questionário\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Listar Conteúdos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": "{{base_url}}/conteudos"
+          },
+          "response": [
+            {
+              "name": "200 Sucesso",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"timestamp\": \"2025-01-01T12:35:00.000Z\",\n  \"message\": \"Conteúdos recuperados com sucesso\",\n  \"data\": [\n    {\n      \"id\": \"uuid-conteudo\",\n      \"titulo\": \"Título gerado\",\n      \"descricao\": \"Descrição gerada\",\n      \"criado_em\": \"2025-01-01T12:30:00.000Z\",\n      \"criador_id\": \"uuid-usuario\",\n      \"total_questionarios\": 1,\n      \"total_perguntas\": 7\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Obter Conteúdo + Questionários",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": "{{base_url}}/conteudos/{{conteudoId}}"
+          },
+          "response": [
+            {
+              "name": "200 Sucesso",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"timestamp\": \"2025-01-01T12:40:00.000Z\",\n  \"message\": \"Conteúdo recuperado com sucesso\",\n  \"data\": {\n    \"id\": \"uuid-conteudo\",\n    \"titulo\": \"Título gerado\",\n    \"descricao\": \"Descrição gerada\",\n    \"input_bruto\": \"Texto...\",\n    \"criador_id\": \"uuid-usuario\",\n    \"criado_em\": \"2025-01-01T12:30:00.000Z\",\n    \"questionarios\": [\n      {\n        \"id\": \"uuid-questionario\",\n        \"ordem\": 1,\n        \"modo\": null,\n        \"criado_em\": \"2025-01-01T12:30:00.000Z\",\n        \"finalizado\": true,\n        \"finalizado_em\": \"2025-01-01T12:50:00.000Z\",\n        \"numero_tentativa_finalizada\": 1,\n        \"perguntas\": [\n          {\n            \"id\": \"uuid-pergunta\",\n            \"ordem\": 1,\n            \"enunciado\": \"Pergunta exemplo?\",\n            \"explicacao\": \"Explicação...\",\n            \"opcoes\": [\n              { \"id\": \"uuid-opcao-a\", \"ordem\": 1, \"texto_opcao\": \"Opção A\" },\n              { \"id\": \"uuid-opcao-b\", \"ordem\": 2, \"texto_opcao\": \"Opção B\" },\n              { \"id\": \"uuid-opcao-c\", \"ordem\": 3, \"texto_opcao\": \"Opção C\" },\n              { \"id\": \"uuid-opcao-d\", \"ordem\": 4, \"texto_opcao\": \"Opção D\" }\n            ]\n          }\n        ],\n        \"resumo_questionario\": \"Resumo mais recente...\"\n      }\n    ]\n  }\n}"
+            },
+            {
+              "name": "404 Não encontrado",
+              "status": "Not Found",
+              "code": 404,
+              "body": "{\n  \"message\": \"Conteúdo não encontrado\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Gerar Novo Questionário (progressao/reforco)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"progressao\": true\n}"
+            },
+            "url": "{{base_url}}/conteudos/{{conteudoId}}/novo-questionario"
+          },
+          "response": [
+            {
+              "name": "201 Sucesso",
+              "status": "Created",
+              "code": 201,
+              "body": "{\n  \"timestamp\": \"2025-01-01T12:45:00.000Z\",\n  \"message\": \"Novo questionário gerado com sucesso!\",\n  \"data\": {\n    \"conteudo_id\": \"uuid-conteudo\",\n    \"questionario_id\": \"uuid-questionario-2\",\n    \"modo\": \"progressao\",\n    \"ordem\": 2,\n    \"progressao\": true,\n    \"perguntas_criadas\": 7\n  }\n}"
+            },
+            {
+              "name": "400 Sem tentativas anteriores",
+              "status": "Bad Request",
+              "code": 400,
+              "body": "{\n  \"message\": \"Não há tentativas anteriores para gerar questionário de progressão baseado nos erros\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Questionários",
+      "item": [
+        {
+          "name": "Listar Questionários",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": "{{base_url}}/questionarios"
+          },
+          "response": [
+            {
+              "name": "200 Sucesso",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"timestamp\": \"2025-01-01T13:00:00.000Z\",\n  \"message\": \"Questionários recuperados com sucesso\",\n  \"data\": [\n    {\n      \"questionario_id\": \"uuid-questionario\",\n      \"conteudo_id\": \"uuid-conteudo\",\n      \"titulo\": \"Título gerado\",\n      \"descricao\": \"Descrição gerada\",\n      \"modo\": null,\n      \"ordem\": 1,\n      \"total_perguntas\": 7,\n      \"criado_em\": \"2025-01-01T12:30:00.000Z\"\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Questionário por Conteúdo",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": "{{base_url}}/questionarios/conteudo/{{conteudoId}}"
+          },
+          "response": [
+            {
+              "name": "200 Sucesso",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"timestamp\": \"2025-01-01T13:05:00.000Z\",\n  \"message\": \"Questionário recuperado com sucesso\",\n  \"data\": {\n    \"questionario_id\": \"uuid-questionario\",\n    \"conteudo_id\": \"uuid-conteudo\",\n    \"titulo\": \"Título gerado\",\n    \"descricao\": \"Descrição gerada\",\n    \"modo\": null,\n    \"total_perguntas\": 7,\n    \"finalizado\": true,\n    \"finalizado_em\": \"2025-01-01T12:50:00.000Z\",\n    \"numero_tentativa_finalizada\": 1,\n    \"historico_respostas\": [\n      {\n        \"pergunta_id\": \"uuid-pergunta\",\n        \"enunciado\": \"Pergunta exemplo?\",\n        \"opcao_escolhida_id\": \"uuid-opcao-b\",\n        \"opcao_escolhida_texto\": \"Opção B\",\n        \"acertou\": true,\n        \"respondido_em\": \"2025-01-01T12:45:00.000Z\",\n        \"opcao_correta_id\": \"uuid-opcao-b\",\n        \"opcao_correta_texto\": \"Opção B\"\n      }\n    ],\n    \"perguntas\": [\n      {\n        \"id\": \"uuid-pergunta\",\n        \"ordem\": 1,\n        \"enunciado\": \"Pergunta exemplo?\",\n        \"explicacao\": \"Explicação...\",\n        \"opcoes\": [\n          { \"id\": \"uuid-opcao-a\", \"ordem\": 1, \"texto\": \"Opção A\", \"correta\": false },\n          { \"id\": \"uuid-opcao-b\", \"ordem\": 2, \"texto\": \"Opção B\", \"correta\": true },\n          { \"id\": \"uuid-opcao-c\", \"ordem\": 3, \"texto\": \"Opção C\", \"correta\": false },\n          { \"id\": \"uuid-opcao-d\", \"ordem\": 4, \"texto\": \"Opção D\", \"correta\": false }\n        ]\n      }\n    ]\n  }\n}"
+            },
+            {
+              "name": "404 Conteúdo não encontrado",
+              "status": "Not Found",
+              "code": 404,
+              "body": "{\n  \"message\": \"Conteúdo não encontrado\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Questionário por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": "{{base_url}}/questionarios/{{questionarioId}}"
+          },
+          "response": [
+            {
+              "name": "200 Sucesso",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"timestamp\": \"2025-01-01T13:10:00.000Z\",\n  \"message\": \"Questionário recuperado com sucesso\",\n  \"data\": {\n    \"questionario_id\": \"uuid-questionario\",\n    \"conteudo_id\": \"uuid-conteudo\",\n    \"titulo\": \"Título gerado\",\n    \"descricao\": \"Descrição gerada\",\n    \"modo\": null,\n    \"total_perguntas\": 7,\n    \"finalizado\": true,\n    \"finalizado_em\": \"2025-01-01T12:50:00.000Z\",\n    \"numero_tentativa_finalizada\": 1,\n    \"historico_respostas\": [\n      {\n        \"pergunta_id\": \"uuid-pergunta\",\n        \"enunciado\": \"Pergunta exemplo?\",\n        \"opcao_escolhida_id\": \"uuid-opcao-b\",\n        \"opcao_escolhida_texto\": \"Opção B\",\n        \"acertou\": true,\n        \"respondido_em\": \"2025-01-01T12:45:00.000Z\",\n        \"opcao_correta_id\": \"uuid-opcao-b\",\n        \"opcao_correta_texto\": \"Opção B\"\n      }\n    ],\n    \"perguntas\": [\n      {\n        \"id\": \"uuid-pergunta\",\n        \"ordem\": 1,\n        \"enunciado\": \"Pergunta exemplo?\",\n        \"explicacao\": \"Explicação...\",\n        \"opcoes\": [\n          { \"id\": \"uuid-opcao-a\", \"ordem\": 1, \"texto\": \"Opção A\", \"correta\": false },\n          { \"id\": \"uuid-opcao-b\", \"ordem\": 2, \"texto\": \"Opção B\", \"correta\": true },\n          { \"id\": \"uuid-opcao-c\", \"ordem\": 3, \"texto\": \"Opção C\", \"correta\": false },\n          { \"id\": \"uuid-opcao-d\", \"ordem\": 4, \"texto\": \"Opção D\", \"correta\": false }\n        ]\n      }\n    ]\n  }\n}"
+            },
+            {
+              "name": "403 Sem permissão",
+              "status": "Forbidden",
+              "code": 403,
+              "body": "{\n  \"message\": \"Você não tem permissão para acessar este questionário\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Finalizar Questionário",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"respostas\": [\n    { \"pergunta_id\": \"uuid-pergunta\", \"opcao_id\": \"uuid-opcao-b\" }\n  ]\n}"
+            },
+            "url": "{{base_url}}/questionarios/{{questionarioId}}/finalizar"
+          },
+          "response": [
+            {
+              "name": "200 Sucesso",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"timestamp\": \"2025-01-01T13:20:00.000Z\",\n  \"message\": \"Questionário finalizado com sucesso\",\n  \"data\": {\n    \"tentativa_id\": \"uuid-tentativa\",\n    \"questionario_id\": \"uuid-questionario\",\n    \"total_perguntas\": 7,\n    \"acertos\": 6,\n    \"erros\": 1,\n    \"porcentagem_acerto\": 86,\n    \"numero_tentativa\": 1,\n    \"respostas_detalhadas\": [\n      {\n        \"pergunta_id\": \"uuid-pergunta\",\n        \"enunciado\": \"Pergunta exemplo?\",\n        \"opcao_escolhida_id\": \"uuid-opcao-b\",\n        \"opcao_escolhida_texto\": \"Opção B\",\n        \"opcao_correta_id\": \"uuid-opcao-b\",\n        \"opcao_correta_texto\": \"Opção B\",\n        \"acertou\": true,\n        \"explicacao\": \"Explicação...\"\n      }\n    ],\n    \"resumo\": \"Resumo educativo gerado pelo GPT...\"\n  }\n}"
+            },
+            {
+              "name": "400 Faltam respostas",
+              "status": "Bad Request",
+              "code": 400,
+              "body": "{\n  \"message\": \"Você deve responder todas as 7 perguntas\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Resumo do Questionário",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": "{{base_url}}/questionarios/{{questionarioId}}/resumo"
+          },
+          "response": [
+            {
+              "name": "200 Sucesso (com resumo)",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"timestamp\": \"2025-01-01T13:25:00.000Z\",\n  \"message\": \"Resumo recuperado com sucesso\",\n  \"data\": {\n    \"resumo\": \"Resumo educativo gerado pelo GPT...\"\n  }\n}"
+            },
+            {
+              "name": "200 Sem resumo ainda",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"timestamp\": \"2025-01-01T13:25:00.000Z\",\n  \"message\": \"Nenhum resumo encontrado. Complete o questionário primeiro.\",\n  \"data\": {\n    \"resumo\": null\n  }\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000/api"
+    },
+    {
+      "key": "authToken",
+      "value": ""
+    },
+    {
+      "key": "conteudoId",
+      "value": ""
+    },
+    {
+      "key": "questionarioId",
+      "value": ""
+    }
+  ]
+}
