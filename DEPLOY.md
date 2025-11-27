@@ -62,16 +62,17 @@ git push -u origin main
 
 ```bash
 NODE_ENV=production
-JWT_SECRET=sua-chave-super-secreta-aqui-minimo-32-caracteres
+JWT_SECRET=casdjiopasdads0-12i32j@ASDASDSAJIY--asdasdas-cdsgulhçklbcv
 JWT_EXPIRES_IN=7d
 OPENAI_API_KEY=sk-sua-chave-openai-aqui
-DB_POOL_SIZE=10
 ```
 
 **IMPORTANTE**:
+- ⚠️ **MUDE o JWT_SECRET!** Não use o exemplo acima, gere sua própria string aleatória
 - ❌ **NÃO** adicione `DATABASE_URL` - Railway adiciona automaticamente
 - ❌ **NÃO** adicione `PORT` - Railway adiciona automaticamente
 - ❌ **NÃO** adicione `HOST` - configurado automaticamente para `0.0.0.0` em produção
+- ❌ **NÃO** adicione variáveis DB_* - Railway usa `DATABASE_URL` automaticamente
 
 #### 6. Deploy!
 
@@ -165,12 +166,13 @@ Na seção "Environment Variables", adicione:
 
 ```bash
 NODE_ENV=production
-DATABASE_URL=<cole-a-internal-database-url-aqui>
-JWT_SECRET=sua-chave-super-secreta-aqui-minimo-32-caracteres
+DATABASE_URL=<cole-a-internal-database-url-do-render-aqui>
+JWT_SECRET=casdjiopasdads0-12i32j@ASDASDSAJIY--asdasdas-cdsgulhçklbcv
 JWT_EXPIRES_IN=7d
 OPENAI_API_KEY=sk-sua-chave-openai-aqui
-DB_POOL_SIZE=10
 ```
+
+**IMPORTANTE**: Troque `JWT_SECRET` por uma string aleatória sua!
 
 #### 6. Deploy!
 
@@ -202,6 +204,7 @@ Conecte-se ao banco usando a "External Database URL" do Render e execute os scri
 | `JWT_EXPIRES_IN` | Tempo de expiração do token | `7d` | ❌ Não (padrão: 7d) |
 | `OPENAI_API_KEY` | Chave API OpenAI | `sk-proj-...` | ✅ Sim |
 | `DB_POOL_SIZE` | Tamanho do pool de conexões | `10` | ❌ Não (padrão: 10) |
+| `DB_HOST`, `DB_PORT`, etc | Configs individuais de banco | - | ❌ Não (ignorados se DATABASE_URL existir) |
 | `PORT` | Porta do servidor | `3000` | ❌ Não (auto no Railway/Render) |
 
 ---
@@ -221,6 +224,15 @@ Conecte-se ao banco usando a "External Database URL" do Render e execute os scri
 ---
 
 ## 🐛 Problemas comuns
+
+### Erro: "Environment variable DB_PASSWORD is not defined"
+Este erro acontecia em versões antigas. **Já foi corrigido!**
+
+Se ainda aparecer:
+- ✅ Faça rebuild: `npm run build`
+- ✅ Faça commit e push das últimas alterações
+- ✅ Certifique-se que `DATABASE_URL` está definida no Railway/Render
+- ✅ **NÃO** adicione DB_PASSWORD manualmente - não é necessário com DATABASE_URL
 
 ### Erro: "Cannot connect to database"
 - ✅ Verifique se `DATABASE_URL` está configurada

@@ -37,13 +37,16 @@ const getEnvNumber = (key: string, defaultValue: number): number => {
   return value ? parseInt(value, 10) : defaultValue;
 };
 
+// Se DATABASE_URL existe (produção), variáveis individuais não são obrigatórias
+const hasDatabaseUrl = !!process.env.DATABASE_URL;
+
 export const env: EnvConfig = {
-  // Database
-  DB_HOST: getEnv('DB_HOST', 'localhost'),
+  // Database - opcionais se DATABASE_URL estiver definida
+  DB_HOST: hasDatabaseUrl ? (process.env.DB_HOST || 'localhost') : getEnv('DB_HOST', 'localhost'),
   DB_PORT: getEnvNumber('DB_PORT', 5432),
-  DB_USER: getEnv('DB_USER', 'postgres'),
-  DB_PASSWORD: getEnv('DB_PASSWORD'),
-  DB_NAME: getEnv('DB_NAME', 'estud_ai'),
+  DB_USER: hasDatabaseUrl ? (process.env.DB_USER || 'postgres') : getEnv('DB_USER', 'postgres'),
+  DB_PASSWORD: hasDatabaseUrl ? (process.env.DB_PASSWORD || '') : getEnv('DB_PASSWORD'),
+  DB_NAME: hasDatabaseUrl ? (process.env.DB_NAME || 'estud_ai') : getEnv('DB_NAME', 'estud_ai'),
   DB_POOL_SIZE: getEnvNumber('DB_POOL_SIZE', 10),
 
   // JWT

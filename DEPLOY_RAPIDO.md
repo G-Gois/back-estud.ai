@@ -22,9 +22,11 @@ git push
 No serviço Node.js → "Variables":
 ```bash
 NODE_ENV=production
-JWT_SECRET=cole-uma-string-aleatoria-longa-aqui
-OPENAI_API_KEY=sk-sua-chave-openai
+JWT_SECRET=casdjiopasdads0-12i32j@ASDASDSAJIY--asdasdas-cdsgulhçklbcv
+OPENAI_API_KEY=sk-sua-chave-openai-aqui
 ```
+
+**IMPORTANTE**: Troque `JWT_SECRET` por uma string aleatória sua! Não use a do exemplo!
 
 ### 5. Gerar domínio público
 Service → Settings → Networking → "Generate Domain"
