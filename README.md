@@ -150,7 +150,7 @@ Authorization: Bearer {token}
 Content-Type: application/json
 
 {
-  "input": "Texto sobre o que você quer estudar (mínimo 50 caracteres)"
+  "input": "Texto sobre o que você quer estudar"
 }
 ```
 
@@ -237,7 +237,7 @@ GET /api/health
 - ✅ Identificação automática da resposta correta
 - ✅ Explicações educativas para cada pergunta
 - ✅ Validação de qualidade dos questionários gerados
-- ✅ Suporte para conteúdos de 50 a 10.000 caracteres
+- ✅ Suporte para conteúdos de até 10.000 caracteres
 
 ### Arquitetura
 - ✅ TypeScript com strict mode
@@ -277,6 +277,29 @@ GET /api/health
 | NODE_ENV | Ambiente de execução | development |
 
 **Importante:** Para usar a funcionalidade de geração de conteúdo, você precisa de uma chave da OpenAI. Obtenha em: https://platform.openai.com/api-keys
+
+## 🚀 Deploy na Internet
+
+Quer usar sua API na internet? É simples e grátis!
+
+### Deploy Rápido (5 minutos)
+📄 Veja: [DEPLOY_RAPIDO.md](./DEPLOY_RAPIDO.md)
+
+**Opções gratuitas:**
+- ✅ **Railway** (recomendado): https://railway.app
+- ✅ **Render**: https://render.com
+
+### Guia Completo
+📚 Tutorial passo a passo: [DEPLOY.md](./DEPLOY.md)
+
+**Inclui:**
+- Configuração de banco de dados
+- Variáveis de ambiente
+- SSL automático
+- Deploy automático no git push
+- Troubleshooting
+
+---
 
 ## Próximos Passos
 

@@ -1,16 +1,26 @@
 import { Pool, PoolConfig } from 'pg';
 import { env } from './env';
 
-const poolConfig: PoolConfig = {
-  host: env.DB_HOST,
-  port: env.DB_PORT,
-  user: env.DB_USER,
-  password: env.DB_PASSWORD,
-  database: env.DB_NAME,
-  max: env.DB_POOL_SIZE,
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 2000,
-};
+// Se DATABASE_URL estiver definida, usa ela (padrão Railway/Render/Heroku)
+// Senão, usa as variáveis individuais
+const poolConfig: PoolConfig = process.env.DATABASE_URL
+  ? {
+      connectionString: process.env.DATABASE_URL,
+      ssl: env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+      max: env.DB_POOL_SIZE,
+      idleTimeoutMillis: 30000,
+      connectionTimeoutMillis: 2000,
+    }
+  : {
+      host: env.DB_HOST,
+      port: env.DB_PORT,
+      user: env.DB_USER,
+      password: env.DB_PASSWORD,
+      database: env.DB_NAME,
+      max: env.DB_POOL_SIZE,
+      idleTimeoutMillis: 30000,
+      connectionTimeoutMillis: 2000,
+    };
 
 export const pool = new Pool(poolConfig);
 

@@ -55,7 +55,7 @@ export const env: EnvConfig = {
 
   // Server
   PORT: getEnvNumber('PORT', 3000),
-  HOST: getEnv('HOST', '127.0.0.1'),
+  HOST: getEnv('HOST', process.env.NODE_ENV === 'production' ? '0.0.0.0' : '127.0.0.1'),
   NODE_ENV: getEnv('NODE_ENV', 'development'),
 };
 
