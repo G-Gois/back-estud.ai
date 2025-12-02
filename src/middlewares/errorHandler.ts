@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { logger, AppError, isDevelopment } from '../utils';
 
 /**
@@ -7,7 +7,8 @@ import { logger, AppError, isDevelopment } from '../utils';
 export const errorHandler = (
   err: Error | AppError,
   req: Request,
-  res: Response
+  res: Response,
+  _next: NextFunction
 ): void => {
   logger.error('Error:', err);
 
